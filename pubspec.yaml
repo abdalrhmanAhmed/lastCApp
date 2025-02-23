@@ -56,7 +56,6 @@ dependencies:
   galleryimage:  any
   youtube_player_flutter:  any
   flutter_inappwebview:  any
-  audioplayers:  any
   path_provider:  any
   open_file:  any
   flutter_html:  any
@@ -64,7 +63,8 @@ dependencies:
   material_design_icons_flutter:  any
   url_launcher:  any
   font_awesome_flutter: any
-  #rename: ^3.0.2
+  audioplayers: ^6.2.0
+  rename: ^3.0.2
 
 dev_dependencies:
   flutter_test:
