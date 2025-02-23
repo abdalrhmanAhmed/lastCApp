@@ -6,7 +6,7 @@ workflows:
     environment:
       flutter: stable  # استخدم أحدث إصدار مستقر من Flutter
       xcode: latest  # استخدم أحدث إصدار من Xcode
-      cocoapods: latest  # تثبيت أحدث إصدار من CocoaPods
+      cocoapods: default  # تثبيت أحدث إصدار من CocoaPods
       vars:
         BUNDLE_ID: "com.example.rheal"  # استبدل بمعرف حزمتك الفعلي
         # APPLE_DEVELOPER_TEAM_ID: "YOUR_TEAM_ID"  # ضع معرف فريق Apple Developer
