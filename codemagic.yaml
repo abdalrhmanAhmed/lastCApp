@@ -9,20 +9,36 @@ workflows:
       cocoapods: default  # تثبيت CocoaPods
       vars:
         BUNDLE_ID: "com.example.rheal"  # استبدل بمعرف حزمتك الفعلي
-        #APPLE_DEVELOPER_TEAM_ID: "YOUR_TEAM_ID"  # ضع معرف فريق Apple Developer
+        # APPLE_DEVELOPER_TEAM_ID: "YOUR_TEAM_ID"  # ضع معرف فريق Apple Developer
     scripts:
+      - name: Debug Mode - Print Environment Variables
+        script: |
+          set -x  # تفعيل وضع التصحيح لعرض جميع الأوامر أثناء التنفيذ
+          env  # طباعة جميع المتغيرات البيئية
+
       - name: Install dependencies
         script: |
+          set -x
           flutter pub get
+
       - name: Build iOS app
         script: |
-          flutter build ios --no-codesign
+          set -x
+          flutter build ios --no-codesign || { echo "❌ Flutter iOS build failed"; exit 1; }
+
       - name: Archive app
         script: |
+          set -x
           xcode-project use-profiles
-          xcode-project build-ipa --workspace="ios/Runner.xcworkspace" --scheme="Runner"
+          xcode-project build-ipa --workspace="ios/Runner.xcworkspace" --scheme="Runner" || { 
+            echo "❌ Xcode IPA build failed. Checking logs..."; 
+            cat ~/Library/Logs/gym/Runner.log  # طباعة آخر سجلات Xcode
+            exit 1; 
+          }
+
     artifacts:
       - build/ios/ipa/*.ipa
+
     publishing:
       email:
         recipients:
