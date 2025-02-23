@@ -64,8 +64,8 @@ dependencies:
   flutter_html:  any
   utm:  any
   material_design_icons_flutter:  any
-  firebase_core:  any
-  firebase_messaging:  any
+  #firebase_core:  any
+  #firebase_messaging:  any
   url_launcher:  any
   font_awesome_flutter: any
   rename: ^3.0.2
