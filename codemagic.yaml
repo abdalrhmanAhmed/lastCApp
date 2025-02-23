@@ -6,7 +6,7 @@ workflows:
     environment:
       flutter: stable  # استخدم أحدث إصدار مستقر من Flutter
       xcode: latest  # استخدم أحدث إصدار من Xcode
-      cocoapods: default  # تثبيت CocoaPods
+      cocoapods: latest  # تثبيت أحدث إصدار من CocoaPods
       vars:
         BUNDLE_ID: "com.example.rheal"  # استبدل بمعرف حزمتك الفعلي
         # APPLE_DEVELOPER_TEAM_ID: "YOUR_TEAM_ID"  # ضع معرف فريق Apple Developer
@@ -20,6 +20,19 @@ workflows:
         script: |
           set -x
           flutter pub get
+
+      - name: Set iOS deployment target to 14.0
+        script: |
+          set -x
+          sed -i '' 's/platform :ios, .*/platform :ios, "14.0"/' ios/Podfile
+          cat ios/Podfile | grep platform  # تأكيد التعديل
+
+      - name: Install CocoaPods dependencies
+        script: |
+          set -x
+          cd ios
+          rm -rf Pods Podfile.lock
+          pod install --repo-update
 
       - name: Build iOS app
         script: |
