@@ -1,4 +1,4 @@
-require File.expand_path('../flutter_export_environment.sh', __FILE__)
+# require File.expand_path('../flutter_export_environment.sh', __FILE__)
 
 platform :ios, '14.0'
 
