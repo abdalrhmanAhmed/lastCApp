@@ -26,5 +26,5 @@ workflows:
     publishing:
       email:
         recipients:
-          - "your-email@example.com"
+          - "se.abdalrhmanahmed@gmail.com"
 
