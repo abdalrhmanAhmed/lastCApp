@@ -6,12 +6,13 @@ inhibit_all_warnings!
 
 # Add Flutter dependencies
 flutter_root = File.expand_path('..', __dir__)
-load File.join(flutter_root, 'flutter', 'tools', 'podhelper.rb')
+load File.join(flutter_root, '.pub-cache', 'hosted', 'pub.dev', 'flutter_tools', 'podhelper.rb')
 
 target 'Runner' do
   use_frameworks!
   use_modular_headers!
 
+  install_flutter_ios_pods(flutter_root)
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 
   target 'RunnerTests' do
