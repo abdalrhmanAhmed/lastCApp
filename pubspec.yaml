@@ -64,7 +64,7 @@ dependencies:
   material_design_icons_flutter:  any
   url_launcher:  any
   font_awesome_flutter: any
-  rename: ^3.0.2
+  #rename: ^3.0.2
 
 dev_dependencies:
   flutter_test:
