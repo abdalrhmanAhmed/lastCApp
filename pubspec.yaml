@@ -42,7 +42,7 @@ dependencies:
   animated_button: any
   otp_text_field: any
   image_picker: any
-  fab_circular_menu: any
+  fab_circular_menu: ^2.0.0
   # flutter_share: any
   permission_handler:  any
   animations: any
