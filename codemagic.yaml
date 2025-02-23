@@ -21,7 +21,8 @@ workflows:
           set -x
           FAB_MENU_PATH=$(find ~/.pub-cache/hosted/pub.dev/ -type d -name "fab_circular_menu-*" | sort -V | tail -n 1)
           if [ -f "$FAB_MENU_PATH/lib/fab_circular_menu.dart" ]; then
-            sed -i '' 's/accentColor/colorScheme.secondary/g' "$FAB_MENU_PATH/lib/fab_circular_menu.dart"
+            sed -i '' 's/theme.accentColor/theme.colorScheme.secondary/g' "$FAB_MENU_PATH/lib/fab_circular_menu.dart"
+            cat "$FAB_MENU_PATH/lib/fab_circular_menu.dart" | grep colorScheme  # تأكيد التعديل
             echo "✅ Fixed accentColor issue in fab_circular_menu.dart"
           else
             echo "⚠️ fab_circular_menu.dart not found! Skipping fix."
