@@ -43,7 +43,6 @@ dependencies:
   otp_text_field: any
   image_picker: any
   fab_circular_menu: any
-  # flutter_share: any
   permission_handler:  any
   animations: any
   timezone: any
@@ -60,16 +59,12 @@ dependencies:
   audioplayers:  any
   path_provider:  any
   open_file:  any
-  # flutter_document_picker:  any
   flutter_html:  any
   utm:  any
   material_design_icons_flutter:  any
-  #firebase_core:  any
-  #firebase_messaging:  any
   url_launcher:  any
   font_awesome_flutter: any
   rename: ^3.0.2
-  #audioplayers_darwin: any
 
 dev_dependencies:
   flutter_test:
