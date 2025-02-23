@@ -16,6 +16,17 @@ workflows:
           set -x  # تفعيل وضع التصحيح لعرض جميع الأوامر أثناء التنفيذ
           env  # طباعة جميع المتغيرات البيئية
 
+      - name: Fix fab_circular_menu accentColor issue
+        script: |
+          set -x
+          FAB_MENU_PATH=$(find ~/.pub-cache/hosted/pub.dev/ -type d -name "fab_circular_menu-*" | sort -V | tail -n 1)
+          if [ -f "$FAB_MENU_PATH/lib/fab_circular_menu.dart" ]; then
+            sed -i '' 's/accentColor/colorScheme.secondary/g' "$FAB_MENU_PATH/lib/fab_circular_menu.dart"
+            echo "✅ Fixed accentColor issue in fab_circular_menu.dart"
+          else
+            echo "⚠️ fab_circular_menu.dart not found! Skipping fix."
+          fi
+
       - name: Install dependencies
         script: |
           set -x
@@ -56,4 +67,3 @@ workflows:
       email:
         recipients:
           - "se.abdalrhmanahmed@gmail.com"
-
