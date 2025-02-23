@@ -5,7 +5,6 @@
 import FlutterMacOS
 import Foundation
 
-import audioplayers_darwin
 import file_selector_macos
 import flutter_inappwebview_macos
 import open_file_mac
