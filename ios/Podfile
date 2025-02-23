@@ -10,8 +10,8 @@ project 'Runner', {
   'Release' => :release,
 }
 
-flutter_root = File.expand_path('..', __dir__)
-load File.join(flutter_root, 'flutter', 'tools', 'podhelper.rb')
+# flutter_root = File.expand_path('..', __dir__)
+# load File.join(flutter_root, 'flutter', 'tools', 'podhelper.rb')
 
 target 'Runner' do
   # Comment the next line if you don't want to use dynamic frameworks
