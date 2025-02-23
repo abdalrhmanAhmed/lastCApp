@@ -1,21 +1,32 @@
 # Uncomment the next line to define a global platform for your project
 platform :ios, '14.0'
 
-# Ignore all warnings from CocoaPods
-inhibit_all_warnings!
+# CocoaPods analytics sends network stats synchronously affecting flutter build latency.
+ENV['COCOAPODS_DISABLE_STATS'] = 'true'
 
-# Add Flutter dependencies
+project 'Runner', {
+  'Debug' => :debug,
+  'Profile' => :release,
+  'Release' => :release,
+}
+
 flutter_root = File.expand_path('..', __dir__)
-load File.join(flutter_root, '.pub-cache', 'hosted', 'pub.dev', 'flutter_tools', 'podhelper.rb')
+load File.join(flutter_root, 'flutter', 'tools', 'podhelper.rb')
 
 target 'Runner' do
+  # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
   use_modular_headers!
 
-  install_flutter_ios_pods(flutter_root)
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
+
+
+
+  # Pods for Runner
 
   target 'RunnerTests' do
     inherit! :search_paths
+    # Pods for testing
   end
+
 end
