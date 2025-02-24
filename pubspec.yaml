@@ -64,8 +64,8 @@ dependencies:
   url_launcher:  any
   font_awesome_flutter: any
   # audioplayers: ^6.2.0
-  audioplayers: any
-  audioplayers_darwin: any
+  # audioplayers: any
+  # audioplayers_darwin: any
   rename: ^3.0.2
 
 dev_dependencies:
