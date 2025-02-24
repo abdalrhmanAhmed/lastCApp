@@ -1,70 +1,94 @@
 workflows:
   ios-build:
     name: iOS Build
-    instance_type: mac_mini_m1  # استخدام Mac Mini M1 للبناء
+    instance_type: mac_mini_m1
     max_build_duration: 60
     environment:
-      flutter: stable  # استخدم أحدث إصدار مستقر من Flutter
-      xcode: latest  # استخدم أحدث إصدار من Xcode
-      cocoapods: default  # تثبيت أحدث إصدار من CocoaPods
+      flutter: stable
+      xcode: latest
+      cocoapods: default
       vars:
-        BUNDLE_ID: "com.example.rheal"  # استبدل بمعرف حزمتك الفعلي
-        # APPLE_DEVELOPER_TEAM_ID: "YOUR_TEAM_ID"  # ضع معرف فريق Apple Developer
+        BUNDLE_ID: "com.example.rheal" # استبدل بالمُعرف الفعلي
     scripts:
-      - name: Debug Mode - Print Environment Variables
-        script: |
-          set -x  # تفعيل وضع التصحيح لعرض جميع الأوامر أثناء التنفيذ
-          env  # طباعة جميع المتغيرات البيئية
-
-      - name: Fix fab_circular_menu accentColor issue
-        script: |
-          set -x
-          FAB_MENU_PATH=$(find ~/.pub-cache/hosted/pub.dev/ -type d -name "fab_circular_menu-*" | sort -V | tail -n 1)
-          if [ -f "$FAB_MENU_PATH/lib/fab_circular_menu.dart" ]; then
-            sed -i '' 's/theme.accentColor/theme.colorScheme.secondary/g' "$FAB_MENU_PATH/lib/fab_circular_menu.dart"
-            cat "$FAB_MENU_PATH/lib/fab_circular_menu.dart" | grep colorScheme  # تأكيد التعديل
-            echo "✅ Fixed accentColor issue in fab_circular_menu.dart"
-          else
-            echo "⚠️ fab_circular_menu.dart not found! Skipping fix."
-          fi
-
       - name: Install dependencies
         script: |
-          set -x
           flutter pub get
-
-      - name: Set iOS deployment target to 14.0
+          cd ios && pod install && cd ..
+      - name: Build iOS
         script: |
-          set -x
-          sed -i '' 's/platform :ios, .*/platform :ios, "14.0"/' ios/Podfile
-          cat ios/Podfile | grep platform  # تأكيد التعديل
-
-      - name: Install CocoaPods dependencies
-        script: |
-          set -x
-          cd ios
-          rm -rf Pods Podfile.lock
-          pod install --repo-update
-
-      - name: Build iOS app
-        script: |
-          set -x
-          flutter build ios --no-codesign || { echo "❌ Flutter iOS build failed"; exit 1; }
-
-      - name: Archive app
-        script: |
-          set -x
-          xcode-project use-profiles
-          xcode-project build-ipa --workspace="ios/Runner.xcworkspace" --scheme="Runner" || { 
-            echo "❌ Xcode IPA build failed. Checking logs..."; 
-            cat ~/Library/Logs/gym/Runner.log  # طباعة آخر سجلات Xcode
-            exit 1; 
-          }
-
+          flutter build ipa --release --no-codesign
     artifacts:
       - build/ios/ipa/*.ipa
 
-    publishing:
-      email:
-        recipients:
-          - "se.abdalrhmanahmed@gmail.com"
+
+
+# workflows:
+#   ios-build:
+#     name: iOS Build
+#     instance_type: mac_mini_m1  # استخدام Mac Mini M1 للبناء
+#     max_build_duration: 60
+#     environment:
+#       flutter: stable  # استخدم أحدث إصدار مستقر من Flutter
+#       xcode: latest  # استخدم أحدث إصدار من Xcode
+#       cocoapods: default  # تثبيت أحدث إصدار من CocoaPods
+#       vars:
+#         BUNDLE_ID: "com.example.rheal"  # استبدل بمعرف حزمتك الفعلي
+#         # APPLE_DEVELOPER_TEAM_ID: "YOUR_TEAM_ID"  # ضع معرف فريق Apple Developer
+#     scripts:
+#       - name: Debug Mode - Print Environment Variables
+#         script: |
+#           set -x  # تفعيل وضع التصحيح لعرض جميع الأوامر أثناء التنفيذ
+#           env  # طباعة جميع المتغيرات البيئية
+
+#       - name: Fix fab_circular_menu accentColor issue
+#         script: |
+#           set -x
+#           FAB_MENU_PATH=$(find ~/.pub-cache/hosted/pub.dev/ -type d -name "fab_circular_menu-*" | sort -V | tail -n 1)
+#           if [ -f "$FAB_MENU_PATH/lib/fab_circular_menu.dart" ]; then
+#             sed -i '' 's/theme.accentColor/theme.colorScheme.secondary/g' "$FAB_MENU_PATH/lib/fab_circular_menu.dart"
+#             cat "$FAB_MENU_PATH/lib/fab_circular_menu.dart" | grep colorScheme  # تأكيد التعديل
+#             echo "✅ Fixed accentColor issue in fab_circular_menu.dart"
+#           else
+#             echo "⚠️ fab_circular_menu.dart not found! Skipping fix."
+#           fi
+
+#       - name: Install dependencies
+#         script: |
+#           set -x
+#           flutter pub get
+
+#       - name: Set iOS deployment target to 14.0
+#         script: |
+#           set -x
+#           sed -i '' 's/platform :ios, .*/platform :ios, "14.0"/' ios/Podfile
+#           cat ios/Podfile | grep platform  # تأكيد التعديل
+
+#       - name: Install CocoaPods dependencies
+#         script: |
+#           set -x
+#           cd ios
+#           rm -rf Pods Podfile.lock
+#           pod install --repo-update
+
+#       - name: Build iOS app
+#         script: |
+#           set -x
+#           flutter build ios --no-codesign || { echo "❌ Flutter iOS build failed"; exit 1; }
+
+#       - name: Archive app
+#         script: |
+#           set -x
+#           xcode-project use-profiles
+#           xcode-project build-ipa --workspace="ios/Runner.xcworkspace" --scheme="Runner" || { 
+#             echo "❌ Xcode IPA build failed. Checking logs..."; 
+#             cat ~/Library/Logs/gym/Runner.log  # طباعة آخر سجلات Xcode
+#             exit 1; 
+#           }
+
+#     artifacts:
+#       - build/ios/ipa/*.ipa
+
+#     publishing:
+#       email:
+#         recipients:
+#           - "se.abdalrhmanahmed@gmail.com"
