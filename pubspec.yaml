@@ -55,7 +55,7 @@ dependencies:
   google_maps_flutter:  any
   galleryimage:  any
   youtube_player_flutter:  any
-  flutter_inappwebview:  any
+  # flutter_inappwebview:  any
   path_provider:  any
   open_file:  any
   flutter_html:  any
