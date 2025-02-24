@@ -9,12 +9,18 @@ workflows:
       cocoapods: default
       vars:
         BUNDLE_ID: "com.example.rheal" # استبدل بالمُعرف الفعلي
-    scripts:
-      - name: Install dependencies
-        script: |
-          flutter clean
-          flutter pub get
-          cd ios && pod install --repo-update && cd ..
+      scripts:
+        - name: Install dependencies
+          script: |
+            flutter clean
+            flutter pub get
+            cd ios
+            rm -rf Pods Podfile.lock
+            pod deintegrate
+            pod setup
+            pod install --repo-update
+            cd ..
+
 
       - name: Build iOS
         script: |
